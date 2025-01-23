@@ -1,4 +1,5 @@
 import lista_sequencial.ListaSequencialNumPy as lsn
+import pilha_encadeada.PilhaEncadeada as pe
 
 # Gustavo - Questão 1 - Prova 1
 print("Questão 1")
@@ -53,7 +54,41 @@ lista.insere_ordenado(5)
 
 print(lista)
 print()
+# Gustavo - Questão 2 - Prova 1
 
+print("Questão 2")
+
+def isOperand(symbol: str) -> bool:
+  return symbol.isalpha()
+def isOperator(symbol: str) -> bool:
+  return symbol in ['+', '-', '*', '/']
+
+def calcula_expressao(expressao: str, operandos: dict) -> float:
+  pilha = pe.Pilha()
+  for simbolo in expressao:
+    if isOperand(simbolo):
+      pilha.empilha(operandos[simbolo])
+    elif isOperator(simbolo):
+      op2 = pilha.desempilha()
+      op1 = pilha.desempilha()
+      match simbolo:
+        case '+':
+          pilha.empilha(op1 + op2)
+        case '-':
+          pilha.empilha(op1 - op2)
+        case '*':
+          pilha.empilha(op1 * op2)
+        case '/':
+          pilha.empilha(op1 / op2)
+  return pilha.desempilha()
+
+operandos = {'A': 2, 'B': 3, 'C': 4}
+expressao = 'AB+C*' # (2 + 3) * 4 = 20
+print(calcula_expressao(expressao, operandos))
+expressao = 'AB-C*' # (2 - 3) * 4 = -4
+print(calcula_expressao(expressao, operandos))
+
+print()
 # Gustavo - Questão 3 - Prova 1
 print("Questão 3")
 
